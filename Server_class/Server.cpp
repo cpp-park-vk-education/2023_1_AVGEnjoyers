@@ -10,6 +10,10 @@
 #include <thread>
 #include "Server.h"
 #include "../urls/index/IndexPage.h"
+#include "../urls/flatList/FlatListPage.h"
+#include "../urls/CurrentFlatPage/CurrentFlatPage.h"
+#include "../urls/LockStatusPage/LockStatusPage.h"
+#include "../urls/RegistrationPage/RegistrationPage.h"
 
 void Server::do_session(boost::asio::ip::tcp::socket socket) {
     try
@@ -24,14 +28,28 @@ void Server::do_session(boost::asio::ip::tcp::socket socket) {
         std::string url = target.substr(0, target.find_first_of("?"));
         std::shared_ptr<http::response<http::string_body>> response = std::make_shared<http::response<http::string_body>>();
 
+
         if (url == "/") {
             IndexPage page(request);
             (*response) = page.getResponse();
-        } else {
-            // handle other targets
+        } else if (url == "/flats"){
+            FlatListPage page(request);
+            (*response) = page.getResponse();
+        } else if(url == "/flat"){
+            CurrentFlatPage page(request);
+            (*response) = page.getResponse();
+        } else if(url == "/lock_status"){
+            LockStatusPage page(request);
+            (*response) = page.getResponse();
+        } else if(url == "/registration"){
+            RegistrationPage page(request);
+            (*response) = page.getResponse();
+        } else{
+            //other
         }
 
         //send response to client
+        response->set(http::field::access_control_allow_origin, "*");
         response->set(http::field::server, BOOST_BEAST_VERSION_STRING);
         response->keep_alive(request->keep_alive());
         response->prepare_payload();

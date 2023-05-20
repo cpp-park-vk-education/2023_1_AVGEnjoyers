@@ -19,10 +19,10 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # Создание нового исполняемого файла для тестов
-add_executable(backend_cpp_tests Tests/test_main.cpp Tests/FlatTest.cpp Flat/Flat.cpp Tests/SmartLockTest.cpp SmartLock/SmartLock.cpp Tests/UserTest.cpp User/User.cpp)
+add_executable(backend_cpp_tests Tests/test_main.cpp Tests/FlatTest.cpp Flat/Flat.cpp Tests/SmartLockTest.cpp SmartLock/SmartLock.cpp Tests/UserTest.cpp User/User.cpp Tests/DBHelperTest.cpp DBHelper/DBHelper.cpp)
 
 # Связывание тестов с GTest и GTest_main
-target_link_libraries(backend_cpp_tests ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES} pthread)
+target_link_libraries(backend_cpp_tests ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES} ${PQXX_LIBRARIES} pthread)
 
 
 # Добавьте ваш исходный код
@@ -32,7 +32,7 @@ add_executable(backend_cpp main.cpp Server_class/Server.cpp
         SmartLock/SmartLock.cpp SmartLock/SmartLock.h
         urls/index/IndexPage.cpp User/User.cpp User/User.h
         urls/index/IndexPage.h urls/AbstractPage.cpp
-        urls/AbstractPage.h)
+        urls/AbstractPage.h Registration/Registration.cpp Registration/Registration.h urls/flatList/FlatListPage.cpp urls/flatList/FlatListPage.h urls/CurrentFlatPage/CurrentFlatPage.cpp urls/CurrentFlatPage/CurrentFlatPage.h urls/LockStatusPage/LockStatusPage.cpp urls/LockStatusPage/LockStatusPage.h urls/RegistrationPage/RegistrationPage.cpp urls/RegistrationPage/RegistrationPage.h)
 
 # Линкуйте ваше приложение со статической библиотекой Wt
 target_link_libraries(backend_cpp

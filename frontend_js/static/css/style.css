@@ -1,0 +1,12 @@
+.btn-rent {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-rent:hover {
+  background-color: #0069d9;
+  color: #fff;
+}
+footer p{
+    align-items:center;
+}

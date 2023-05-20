@@ -5,12 +5,12 @@
 #include "../SmartLock/SmartLock.h"
 
 TEST(SmartLockTest, LockIsClosedByDefault) {
-    SmartLock lock;
+    SmartLock lock(1, 1, false);
     EXPECT_FALSE(lock.is_open());
 }
 
 TEST(SmartLockTest, LockCanBeOpenedAndClosed) {
-    SmartLock lock;
+    SmartLock lock(1, 1, false);
     EXPECT_FALSE(lock.is_open());
 
     lock.open();

@@ -24,3 +24,27 @@ AbstractPage::parseGetRequest(std::shared_ptr<http::request<http::string_body>> 
 
     return map;
 }
+
+http::response<http::string_body> AbstractPage::getErrorResponse(const std::string& text, http::status status) {
+    boost::beast::http::response<http::string_body> res {status, 11};
+    res.body() = text;
+    return res;
+}
+
+std::unordered_map<std::string, std::string>
+AbstractPage::parsePostRequest(std::shared_ptr<http::request<http::string_body>> request) {
+    std::unordered_map<std::string, std::string> postParams;
+
+    std::istringstream ss(request->body());
+    std::string param;
+    while (std::getline(ss, param, '&')) {
+        std::size_t pos = param.find('=');
+        if (pos != std::string::npos) {
+            std::string key = param.substr(0, pos);
+            std::string value = param.substr(pos + 1);
+            postParams[key] = value;
+        }
+    }
+
+    return postParams;
+}
